@@ -5,9 +5,9 @@ const UserControler = require('./controllers/UserController')
 
 const routes = express.Router()
 
-routes.get('/users', UserControler.index)
+routes.get('/', UserControler.index)
 
-routes.post('/users', celebrate({
+routes.post('/', celebrate({
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string().required(),
         email: Joi.string().required().email(),
@@ -15,7 +15,7 @@ routes.post('/users', celebrate({
     })
 }), UserControler.create)
 
-routes.delete('/users/:id', celebrate({
+routes.delete('/:id', celebrate({
     [Segments.PARAMS]: Joi.object().keys({
         id: Joi.number().required(),
     })

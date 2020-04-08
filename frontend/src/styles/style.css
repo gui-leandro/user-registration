@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font: 400 14px Roboto, sans-serif;
+    background: #ccbdd8;
+    -webkit-font-smoothing: antialiased;
+}
+
+#header {
+    background-color: #985afd;
+}
+
+#header img {
+    display: flex;
+    width: 150px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#footer {
+    display: block;
+    bottom: 0;
+    width: 100%;
+    background-color: #985afd;
+    color: #fff;
+    text-align: center;
+    margin: 0px;
+    padding: 10px;
+}
+
+#footer img {
+    position: relative;
+    width: 60px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+}
+
+input, submit {
+    font: 400 18px Roboto, sans-serif;
+    padding: 3px;
+    margin: 5px 0 5px 0;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.button {
+    width: 100%;
+    height: 50px;
+    background: #ff9900;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    margin: 16px 0 16px 0;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    transition: filter .2s;
+}
+
+.button:hover {
+    filter: brightness(90%);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    grid-gap: 20px;
+    padding: 10px;
+    font-size: 15pt;
+}
+
+#userlist {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+#userlist ul {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+#userlist ul li {
+    list-style-type: none;
+    margin: 10px;
+    padding: 5px;
+    color: rgba(0, 0, 0, 0.8);
+    text-align: left;
+}
+
+#form {
+    text-align: center;
+}
+
+#form input {
+    display: inline-block;
+    width: 100%;
+}
