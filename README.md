@@ -5,7 +5,7 @@ Um sistema desenvolvido em ReactJS e NodeJS para o cadastro de usuários, cada u
 ## Projeto
 
 <p align="center">
-    ![User Registration](https://github.com/Guirdy/user-registration/blob/master/img/User-registration.gif)
+    <img src="https://github.com/Guirdy/user-registration/blob/master/img/User-registration.gif">
 </p>
 
 ## Tecnologias utilizadas
