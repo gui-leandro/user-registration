@@ -42,7 +42,6 @@ module.exports = {
         }
 
         await connection('users').where('id', id).delete()
-
         return res.status(204).send()
     }
 }
