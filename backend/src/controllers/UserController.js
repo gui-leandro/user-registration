@@ -38,7 +38,7 @@ module.exports = {
             .first()
         
         if(user.id != id) {
-            return res.status(401).json({ error: 'Operation not permitted.' })
+            return res.status(401).json({ error: 'No user found with this ID' })
         }
 
         await connection('users').where('id', id).delete()

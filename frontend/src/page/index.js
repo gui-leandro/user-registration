@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
-import api from '../services/api'
+import React, { useState, useEffect } from 'react'
+import api from '../services/api'   //API do back-end com Axios
 import './style.css'
 
 import logoImg from '../assets/logo.png'
+import gitImg from '../assets/github.png'
+import linkedinImg from '../assets/linkedin.png'
 
 export default function Main() {
+    //Variáveis que armazenam os dados do formulário
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    let [id, setId] = useState('')
 
-    const [id, setId] = useState('')
+    //Dispara uma função em determinado momento, nesse caso assim que é mostrado em tela
+    const [users, setUsers] = useState([])
+    useEffect(() => {
+        api.get('/').then(res => {
+            setUsers(res.data)
+        })
+    }, []) // Com o array vazio executa apenas uma única vez no fluxo do componente
 
+    //Função que pega os dados do form salvos
     async function userRegister(e) {
         e.preventDefault()
 
@@ -19,7 +30,7 @@ export default function Main() {
             email,
             phone
         }
-
+        //Salva os dados do novo usuário no banco de dados do back-end
         try {
             const response = await api.post('/', data)
             alert(`Novo usuário de ID:${response.data.id} cadastrado.`)
@@ -28,6 +39,8 @@ export default function Main() {
                 email: setEmail(''),
                 phone: setPhone('')
             }
+            //Recarrega a página para atualizar a lista
+            window.location.reload();
         } catch(error) {
             alert('Erro no cadastro.')
             data = {
@@ -37,21 +50,16 @@ export default function Main() {
             }
         }
     }
-
-    async function userDelete(e) {
+    //Função que chama o método do back responsável pela exclusão do usuário
+    function userDelete(e) {
         e.preventDefault()
 
-        const data = {
-            id
-        }
-
-        await api.delete(`/${data.id}`)
-        alert('User deleted')
-        data = {
-            id: setId('')
-        }
+        api.delete(`/${id}`)
+        //Atualiza a lista de usuários mostrando apenas quem não foi excluído
+        setUsers(users.filter(user => user.id !== id))
+        id = setId('')
     }
-
+    //Interface do sistema, retorno do HTML
     return (
         <div id="mainContainer">
             <header id="header">
@@ -60,47 +68,41 @@ export default function Main() {
 
             <div className="container">
                 <div id="userlist">
-                    <div className="count">
-                        <h3 id="flex1">User List</h3>
-                        <h3 id="flex2">Total: 3</h3>
+                    <div className="list">
+                        <h3>User List</h3>
                     </div>
-                    <ul>
-                        <li>ID: 21174632</li>
-                        <li>Name: Guilherme</li>
-                        <li>E-mail: guilherme@email.com</li>
-                        <li>Phone: 11970707070</li>
-                    </ul>
-                    <ul>
-                        <li>ID: 21174632</li>
-                        <li>Name: Guilherme</li>
-                        <li>E-mail: guilherme@email.com</li>
-                        <li>Phone: 11970707070</li>
-                    </ul>
-                    <ul>
-                        <li>ID: 21174632</li>
-                        <li>Name: Guilherme</li>
-                        <li>E-mail: guilherme@email.com</li>
-                        <li>Phone: 11970707070</li>
-                    </ul>
+                    
+                    { users.map(user => (
+                        <ul key={user.id}>
+                            <li style={{ color: "#ff0000" }}><strong>ID: {user.id}</strong></li>
+                            <li>Name: {user.name}</li>
+                            <li>E-mail: {user.email}</li>
+                            <li>Phone: {user.phone}</li>
+                        </ul>
+                    ))}
+                    
                 </div>
                 <div id="form">
                     <form onSubmit={userRegister}>
                         <p>Register User</p>
                         <input
-                            type="text"
-                            placeholder="Name"
-                            value={name}
+                            type="text" 
+                            placeholder="Name" 
+                            maxLength="50" 
+                            value={name} 
                             onChange={e => setName(e.target.value)}   
                         />
                         <input 
                             type="email" 
                             placeholder="E-mail" 
+                            maxLength="50" 
                             value={email}
                             onChange={e => setEmail(e.target.value)}    
                         />
                         <input 
                             type="text" 
                             placeholder="Phone" 
+                            maxLength="11" 
                             value={phone}
                             onChange={e => setPhone(e.target.value)}    
                         />
@@ -111,19 +113,18 @@ export default function Main() {
                         <input 
                             type="text" 
                             placeholder="User ID" 
+                            maxLength="8" 
                             value={id}
                             onChange={e => setId(e.target.value)}    
                         />
                         <input className="button" type="submit" value="Delete"/>   
                     </form>
                 </div>
-                <div>
-
-                </div>
             </div>
             <footer id="footer">
-                <img src={logoImg} alt="Logo" />
-                <p>Copyright {'\u00A9'} User Registration | Todos os direitos reservados</p>
+                <a href="https://www.linkedin.com/in/guirdy1/" target="_blank"><img src={linkedinImg} alt="Linkedin" /></a>
+                <a href="https://github.com/Guirdy/user-registration" target="_blank"><img src={gitImg} alt="Github" /></a>
+                <p>Copyright {'\u00A9'} User Registration | Todos os direitos reservados.</p>
             </footer>
         </div>
     )

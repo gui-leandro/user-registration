@@ -17,7 +17,7 @@ routes.post('/', celebrate({
 
 routes.delete('/:id', celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-        id: Joi.number().required().min(8).max(8),
+        id: Joi.number().required(),
     })
 }), UserControler.delete)
 
